@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <nav>
+            <h2>🤖 Refer & Earn Bot</h2>
+            <div>
+                <a href="/dashboard">Dashboard</a>
+                <a href="/users">Users</a>
+                <a href="/withdrawals">Withdrawals</a>
+                <a href="/broadcast">Broadcast</a>
+                <a href="/settings">Settings</a>
+                <a href="/logout">Logout</a>
+            </div>
+        </nav>
+        
+        <div class="stats">
+            <div class="stat-card">
+                <h3>👥 Total Users</h3>
+                <p><%= totalUsers %></p>
+            </div>
+            <div class="stat-card">
+                <h3>✅ Active Users</h3>
+                <p><%= activeUsers %></p>
+            </div>
+            <div class="stat-card">
+                <h3>💰 Total Withdrawn</h3>
+                <p>₹<%= totalWithdrawn.toFixed(2) %></p>
+            </div>
+            <div class="stat-card">
+                <h3>⏳ Pending Requests</h3>
+                <p><%= pendingWithdrawals %></p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
