@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Broadcast</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <nav>
+            <h2>🤖 Refer & Earn Bot</h2>
+            <div>
+                <a href="/dashboard">Dashboard</a>
+                <a href="/users">Users</a>
+                <a href="/withdrawals">Withdrawals</a>
+                <a href="/broadcast">Broadcast</a>
+                <a href="/settings">Settings</a>
+                <a href="/logout">Logout</a>
+            </div>
+        </nav>
+        
+        <h1>📢 Broadcast Message</h1>
+        
+        <div style="background: white; padding: 20px; border-radius: 10px;">
+            <form method="POST" action="/broadcast/send">
+                <div style="margin-bottom: 15px;">
+                    <label><strong>Message (Supports Markdown):</strong></label>
+                    <textarea name="message" rows="8" style="width: 100%; padding: 10px; margin-top: 5px;" 
+                        placeholder="*Bold text*&#10;_Italic text_&#10;[Link](https://t.me/...)&#10;&#10;🎉 Use emojis too!"></textarea>
+                </div>
+                <div style="color: #666; margin-bottom: 15px; font-size: 14px;">
+                    💡 <strong>Tip:</strong> You can use Markdown formatting!<br>
+                    *bold* _italic_ [link](https://t.me/) `code`
+                </div>
+                <button type="submit">📡 Send to All Users</button>
+            </form>
+        </div>
+        
+        <div style="margin-top: 30px;">
+            <p style="color: #666;">⚠️ <strong>Warning:</strong> This will send message to ALL active users. Cannot be undone!</p>
+        </div>
+    </div>
+</body>
+</html>
