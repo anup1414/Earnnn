@@ -25,7 +25,7 @@ module.exports = {
   
   // Channels - YAHAN FIX KIYA
   CHANNELS: [
-    { id: '@bn405bn-QY84NGJ1', link: 'https://t.me/+81o9PhdsxF5hOTI9', name: 'Channel 1 - Main' },
+    { id: '@bn405bn-QY84NGJ1', link: 'https://t.me/captain_chat_gc', name: 'Channel 1 - Main' },
     { id: '@captain_earn', link: 'https://t.me/captain_earn', name: 'Channel 2 - Updates' }
   ]
 };
