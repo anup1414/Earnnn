@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Withdrawals</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <nav>
+            <h2>🤖 Refer & Earn Bot</h2>
+            <div>
+                <a href="/dashboard">Dashboard</a>
+                <a href="/users">Users</a>
+                <a href="/withdrawals">Withdrawals</a>
+                <a href="/broadcast">Broadcast</a>
+                <a href="/settings">Settings</a>
+                <a href="/logout">Logout</a>
+            </div>
+        </nav>
+        
+        <h1>💸 Withdrawal Requests</h1>
+        
+        <div style="margin-bottom: 20px;">
+            <a href="/withdrawals?status=pending" class="btn" style="background: <%= status === 'pending' ? '#667eea' : '#ccc' %>">⏳ Pending</a>
+            <a href="/withdrawals?status=paid" class="btn" style="background: <%= status === 'paid' ? '#28a745' : '#ccc' %>">✅ Paid</a>
+            <a href="/withdrawals?status=rejected" class="btn" style="background: <%= status === 'rejected' ? '#dc3545' : '#ccc' %>">❌ Rejected</a>
+        </div>
+        
+        <table>
+            <thead>
+                <tr><th>Date</th><th>User ID</th><th>User Name</th><th>Amount</th><th>UPI ID</th><th>Status</th><th>Action</th></tr>
+            </thead>
+            <tbody>
+                <% withdrawals.forEach(w => { 
+                    const user = {}; // You can fetch user details if needed
+                %>
+                    <tr>
+                        <td><%= new Date(w.createdAt).toLocaleString() %></td>
+                        <td><%= w.userId %></td>
+                        <td><a href="/user/<%= w.userId %>">View User</a></td>
+                        <td>₹<%= w.amount.toFixed(2) %></td>
+                        <td><%= w.upiId %></td>
+                        <td>
+                            <%= w.status === 'paid' ? '✅ Paid' : w.status === 'rejected' ? '❌ Rejected' : '⏳ Pending' %>
+                        </td>
+                        <td>
+                            <% if (w.status === 'pending') { %>
+                                <form method="POST" action="/withdraw/approve" style="display: inline-block;">
+                                    <input type="hidden" name="withdrawalId" value="<%= w._id %>">
+                                    <input type="hidden" name="userId" value="<%= w.userId %>">
+                                    <input type="hidden" name="amount" value="<%= w.amount %>">
+                                    <button type="submit" style="background: #28a745;">✅ Approve</button>
+                                </form>
+                                <form method="POST" action="/withdraw/reject" style="display: inline-block;">
+                                    <input type="hidden" name="withdrawalId" value="<%= w._id %>">
+                                    <input type="hidden" name="userId" value="<%= w.userId %>">
+                                    <input type="hidden" name="amount" value="<%= w.amount %>">
+                                    <button type="submit" style="background: #dc3545;">❌ Reject</button>
+                                </form>
+                            <% } %>
+                        </td>
+                    </tr>
+                <% }) %>
+                <% if (withdrawals.length === 0) { %>
+                    <tr><td colspan="7" style="text-align: center;">No <%= status %> withdrawals</td></tr>
+                <% } %>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
