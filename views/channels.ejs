@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Manage Channels</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <nav>
+            <h2>🤖 Refer & Earn Bot</h2>
+            <div>
+                <a href="/dashboard">Dashboard</a>
+                <a href="/users">Users</a>
+                <a href="/withdrawals">Withdrawals</a>
+                <a href="/broadcast">Broadcast</a>
+                <a href="/channels">Channels</a>
+                <a href="/settings">Settings</a>
+                <a href="/logout">Logout</a>
+            </div>
+        </nav>
+        
+        <h1>📢 Manage Channels</h1>
+        
+        <!-- Add New Channel Form -->
+        <div style="background: white; padding: 20px; border-radius: 10px; margin-bottom: 20px;">
+            <h3>➕ Add New Channel</h3>
+            <form method="POST" action="/channels/add">
+                <div style="margin-bottom: 10px;">
+                    <input type="text" name="channelId" placeholder="Channel ID (e.g., @username or -100123456789)" required style="width: 100%; padding: 10px;">
+                </div>
+                <div style="margin-bottom: 10px;">
+                    <input type="text" name="link" placeholder="Channel Link (e.g., https://t.me/username)" required style="width: 100%; padding: 10px;">
+                </div>
+                <div style="margin-bottom: 10px;">
+                    <input type="text" name="name" placeholder="Display Name" required style="width: 100%; padding: 10px;">
+                </div>
+                <button type="submit" style="background: #28a745;">➕ Add Channel</button>
+            </form>
+        </div>
+        
+        <!-- Channels List -->
+        <h3>📋 Your Channels</h3>
+        <table>
+            <thead>
+                <tr><th>Channel ID</th><th>Name</th><th>Link</th><th>Status</th><th>Action</th></tr>
+            </thead>
+            <tbody>
+                <% channels.forEach(channel => { %>
+                    <tr style="<%= !channel.isActive ? 'opacity: 0.5;' : '' %>">
+                        <td><%= channel.channelId %></td>
+                        <td><%= channel.name %></td>
+                        <td><a href="<%= channel.link %>" target="_blank">Open</a></td>
+                        <td><%= channel.isActive ? '✅ Active' : '❌ Inactive' %></td>
+                        <td>
+                            <form method="POST" action="/channels/toggle" style="display: inline-block;">
+                                <input type="hidden" name="channelId" value="<%= channel._id %>">
+                                <input type="hidden" name="isActive" value="<%= !channel.isActive %>">
+                                <button type="submit" style="background: <%= channel.isActive ? '#dc3545' : '#28a745' %>">
+                                    <%= channel.isActive ? '❌ Disable' : '✅ Enable' %>
+                                </button>
+                            </form>
+                            <form method="POST" action="/channels/delete" style="display: inline-block;" onsubmit="return confirm('Delete this channel?')">
+                                <input type="hidden" name="channelId" value="<%= channel._id %>">
+                                <button type="submit" style="background: #dc3545;">🗑️ Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                <% }) %>
+                <% if (channels.length === 0) { %>
+                    <tr><td colspan="5" style="text-align: center;">No channels added yet. Add your first channel above!</td></tr>
+                <% } %>
+            </tbody>
+        </table>
+        
+        <!-- Important Instructions -->
+        <div style="background: #fff3cd; padding: 15px; border-radius: 10px; margin-top: 20px;">
+            <h3 style="color: #856404;">⚠️ Important Instructions:</h3>
+            <ul style="color: #856404;">
+                <li><strong>Bot MUST be admin in every channel!</strong> - Public or private, bot needs admin access.</li>
+                <li><strong>For private channels:</strong> Add bot using <code>/add @Refer_and_earn000_bot</code> in channel, then make admin.</li>
+                <li><strong>Channel ID format:</strong> Use @username for public channels, numeric ID (e.g., -100123456789) for private channels.</li>
+                <li><strong>To get private channel ID:</strong> Make bot admin → Visit <code>https://api.telegram.org/botYOUR_TOKEN/getUpdates</code> → Copy chat_id</li>
+            </ul>
+        </div>
+        
+        <!-- Test Verification -->
+        <div style="background: #e7f3ff; padding: 15px; border-radius: 10px; margin-top: 20px;">
+            <h3>🔧 Test Channel Verification</h3>
+            <form method="POST" action="/channels/test">
+                <input type="text" name="userId" placeholder="User Telegram ID to test" required style="padding: 10px; width: 300px;">
+                <button type="submit">🔍 Test Verification</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
