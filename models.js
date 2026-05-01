@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-// ─── USER MODEL ───────────────────────────────────────────────────────────────
+// User Model
 const userSchema = new mongoose.Schema({
   telegramId: { type: String, required: true, unique: true },
   username: String,
@@ -19,36 +19,42 @@ const userSchema = new mongoose.Schema({
   banned: { type: Boolean, default: false },
   deviceInfo: { type: String, default: '{}' },
   ipHash: String,
-  createdAt: { type: Date, default: Date.now }
-});
+}, { timestamps: true });
 
-// ─── WITHDRAWAL MODEL ─────────────────────────────────────────────────────────
+// Withdrawal Model
 const withdrawalSchema = new mongoose.Schema({
   userId: { type: String, required: true },
   upiId: { type: String, required: true },
   amount: { type: Number, required: true },
   status: { type: String, enum: ['pending', 'paid', 'rejected'], default: 'pending' },
   adminNote: String,
-  createdAt: { type: Date, default: Date.now }
-});
+}, { timestamps: true });
 
-// ─── SETTINGS MODEL ───────────────────────────────────────────────────────────
+// Settings Model
 const settingsSchema = new mongoose.Schema({
   key: { type: String, unique: true },
   value: mongoose.Schema.Types.Mixed
 }, { timestamps: true });
 
-// ─── BROADCAST LOG ────────────────────────────────────────────────────────────
+// Channel Model - NEW
+const channelSchema = new mongoose.Schema({
+  channelId: { type: String, required: true, unique: true }, // Can be @username or numeric ID
+  link: { type: String, required: true },
+  name: { type: String, required: true },
+  isActive: { type: Boolean, default: true },
+}, { timestamps: true });
+
+// Broadcast Log Model
 const broadcastSchema = new mongoose.Schema({
   message: String,
   sentCount: Number,
   failedCount: Number,
-  createdAt: { type: Date, default: Date.now }
-});
+}, { timestamps: true });
 
 const User = mongoose.model('User', userSchema);
 const Withdrawal = mongoose.model('Withdrawal', withdrawalSchema);
 const Settings = mongoose.model('Settings', settingsSchema);
+const Channel = mongoose.model('Channel', channelSchema);
 const BroadcastLog = mongoose.model('BroadcastLog', broadcastSchema);
 
-module.exports = { User, Withdrawal, Settings, BroadcastLog };
+module.exports = { User, Withdrawal, Settings, Channel, BroadcastLog };
