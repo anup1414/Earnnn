@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User Details</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <nav>
+            <h2>🤖 Refer & Earn Bot</h2>
+            <div>
+                <a href="/dashboard">Dashboard</a>
+                <a href="/users">Users</a>
+                <a href="/withdrawals">Withdrawals</a>
+                <a href="/broadcast">Broadcast</a>
+                <a href="/settings">Settings</a>
+                <a href="/logout">Logout</a>
+            </div>
+        </nav>
+        
+        <h1>👤 User Details</h1>
+        
+        <div style="background: white; padding: 20px; border-radius: 10px; margin-bottom: 20px;">
+            <p><strong>ID:</strong> <%= user.telegramId %></p>
+            <p><strong>Name:</strong> <%= user.firstName %> <%= user.lastName || '' %></p>
+            <p><strong>Username:</strong> @<%= user.username || 'N/A' %></p>
+            <p><strong>Balance:</strong> ₹<%= user.balance.toFixed(2) %></p>
+            <p><strong>Total Earned:</strong> ₹<%= (user.totalEarned || 0).toFixed(2) %></p>
+            <p><strong>Total Withdrawn:</strong> ₹<%= (user.totalWithdrawn || 0).toFixed(2) %></p>
+            <p><strong>Referrals:</strong> <%= user.referCount || 0 %></p>
+            <p><strong>Refer Code:</strong> <%= user.referCode %></p>
+            <p><strong>Referred By:</strong> <%= user.referredBy || 'Direct' %></p>
+            <p><strong>Status:</strong> <%= user.banned ? '❌ Banned' : '✅ Active' %></p>
+            <p><strong>Joined:</strong> <%= new Date(user.createdAt).toLocaleString() %></p>
+        </div>
+        
+        <h2>💰 Actions</h2>
+        <div style="background: white; padding: 20px; border-radius: 10px; margin-bottom: 20px;">
+            <form method="POST" action="/user/addbalance" style="display: inline-block; margin-right: 10px;">
+                <input type="hidden" name="userId" value="<%= user.telegramId %>">
+                <input type="number" name="amount" step="0.01" placeholder="Amount" required style="width: 150px;">
+                <button type="submit">➕ Add Balance</button>
+            </form>
+            
+            <form method="POST" action="/user/toggleban" style="display: inline-block;">
+                <input type="hidden" name="userId" value="<%= user.telegramId %>">
+                <button type="submit" style="background: <%= user.banned ? '#28a745' : '#dc3545' %>">
+                    <%= user.banned ? '🔓 Unban User' : '🔒 Ban User' %>
+                </button>
+            </form>
+        </div>
+        
+        <h2>📜 Withdrawal History</h2>
+        <table>
+            <thead>
+                <tr><th>Date</th><th>Amount</th><th>UPI ID</th><th>Status</th></tr>
+            </thead>
+            <tbody>
+                <% withdrawals.forEach(w => { %>
+                    <tr>
+                        <td><%= new Date(w.createdAt).toLocaleString() %></td>
+                        <td>₹<%= w.amount.toFixed(2) %></td>
+                        <td><%= w.upiId %></td>
+                        <td><%= w.status === 'paid' ? '✅ Paid' : w.status === 'rejected' ? '❌ Rejected' : '⏳ Pending' %></td>
+                    </tr>
+                <% }) %>
+                <% if (withdrawals.length === 0) { %>
+                    <tr><td colspan="4" style="text-align: center;">No withdrawals yet</td></tr>
+                <% } %>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
