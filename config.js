@@ -25,9 +25,8 @@ module.exports = {
   
   // Channels
   CHANNELS: [
-    { id: '@YourChannel1', link: 'https://t.me/YourChannel1', name: 'Channel 1 — Main' },
-    { id: '@YourChannel2', link: 'https://t.me/YourChannel2', name: 'Channel 2 — Updates' },
-    { id: '@YourChannel3', link: 'https://t.me/YourChannel3', name: 'Channel 3 — News' },
-    { id: '@YourChannel4', link: 'https://t.me/YourChannel4', name: 'Channel 4 — Offers' }
+    { id: '@YourChannel1', link: 'https://t.me/+Bn4o5bn-QY84NGJl', name: 'Channel 1 — Main' },
+    { id: '@YourChannel2', link: 'https://t.me/captain_earn', name: 'Channel 2 — Updates' },
+
   ]
 };
