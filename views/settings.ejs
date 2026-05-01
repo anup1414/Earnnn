@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Settings</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <nav>
+            <h2>🤖 Refer & Earn Bot</h2>
+            <div>
+                <a href="/dashboard">Dashboard</a>
+                <a href="/users">Users</a>
+                <a href="/withdrawals">Withdrawals</a>
+                <a href="/broadcast">Broadcast</a>
+                <a href="/settings">Settings</a>
+                <a href="/logout">Logout</a>
+            </div>
+        </nav>
+        
+        <h1>⚙️ Bot Settings</h1>
+        
+        <div style="background: white; padding: 20px; border-radius: 10px;">
+            <form method="POST" action="/settings/update">
+                <div style="margin-bottom: 20px;">
+                    <label><strong>💰 Welcome Bonus (₹):</strong></label>
+                    <input type="number" name="welcome_bonus" step="0.01" value="<%= welcomeBonus %>" required style="width: 200px; display: block; margin-top: 5px;">
+                </div>
+                
+                <div style="margin-bottom: 20px;">
+                    <label><strong>👥 Refer Bonus (₹ per refer):</strong></label>
+                    <input type="number" name="refer_bonus" step="0.01" value="<%= referBonus %>" required style="width: 200px; display: block; margin-top: 5px;">
+                </div>
+                
+                <div style="margin-bottom: 20px;">
+                    <label><strong>💸 Minimum Withdrawal (₹):</strong></label>
+                    <input type="number" name="min_withdraw" step="0.01" value="<%= minWithdraw %>" required style="width: 200px; display: block; margin-top: 5px;">
+                </div>
+                
+                <div style="margin-bottom: 20px;">
+                    <label><strong>🎨 Welcome Message (Supports Markdown + Emojis):</strong></label>
+                    <textarea name="welcome_message" rows="10" style="width: 100%; padding: 10px; margin-top: 5px;"><%= welcomeMessage %></textarea>
+                    <div style="color: #666; margin-top: 5px; font-size: 14px;">
+                        💡 <strong>Available placeholder:</strong> <code>{name}</code> - User's first name<br>
+                        <strong>Markdown supported:</strong> *bold* _italic_ `code`<br>
+                        <strong>Emojis:</strong> 🎉 🚀 💰 ✨ ✅ ⭐
+                    </div>
+                </div>
+                
+                <button type="submit">💾 Save Settings</button>
+            </form>
+        </div>
+        
+        <div style="margin-top: 30px; background: #f0f0f0; padding: 15px; border-radius: 10px;">
+            <h3>📝 How to Use Welcome Message:</h3>
+            <pre style="background: white; padding: 10px; border-radius: 5px; overflow-x: auto;">
+Example with emojis:
+🎉 *Swagat Hai {name}!* 🎉
+
+💎 *Refer & Earn Bot* mein aapka swagat hai!
+
+📌 *Pehle Ye Karo:*
+⭐ Niche diye sare channels join karo
+⭐ *₹5 instant* welcome bonus pao!
+
+🚀 Refer karo aur unlimited earn karo!
+            </pre>
+        </div>
+    </div>
+</body>
+</html>
